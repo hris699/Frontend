@@ -2,7 +2,7 @@
   <div>
     <head>
       <title>Facebook</title>
-      <link href="style.css" type="text/css" rel="stylesheet" />
+    
       <link
         rel="icon"
         type="image/x-icon"
@@ -94,8 +94,8 @@
             <li>
               <input
                 type="password"
-                v-model="confrim_password"
-                placeholder="Confrim password"
+                v-model="confirm_password"
+                placeholder="Confirm password"
                 id="confirm_pass"
               /><br /><small v-if="confirmError">{{ confirmError }}</small>
             </li>
@@ -130,7 +130,7 @@ export default {
       username: "",
       email: "",
       password: "",
-      confrim_password: "",
+      confirm_password: "",
       nameError: "",
       emailError: "",
       passwordError: "",
@@ -143,34 +143,45 @@ export default {
       const passwordRegx = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).*$/;
       if (!this.username) {
         this.nameError = "Username is required";
+      } else{
+        this.nameError='';
+        console.log('Username Validation is working')
       }
 
       if (!this.email) {
         this.emailError = "E-mail is required";
-      }
-      else if(!emailRegx.test(this.email)){
+      } else if(!emailRegx.test(this.email)){
         this.emailError = "Enter a valid E-mail";
+      } else{
+        this.emailError='';
+        console.log('Email validation is working')
       }
 
       if (!this.password){
-        this.passwordError = "password is reqired";
-      }
-      else if(!passwordRegx.test(this.password)){
-        this.passwordError='Enter a valid password'
+        this.passwordError = "Password is required";
+      } else if(!passwordRegx.test(this.password)){
+        this.passwordError='Enter a valid password';
+      } else{
+        this.passwordError='';
+        console.log('Password validation is working')
       }
       if(!this.confirm_password){
         this.confirmError = 'Enter the password again'
-      }
-      else if(this.password != this.confirm_password){
+      } else if(this.confirm_password != this.password){
         this.confirmError = 'Password should be same'
+      } else {
+        this.confirmError = '';
+        console.log('Confirm password validation is working')
       }
-
+      if(this.username && this.email && this.password && this.confirm_password){
+          console.log("Validations successfully working")
+        }
     }
   },
 };
 </script>
 
-<style>
+<style scoped>
 body {
   text-align: center;
   width: 100%;
