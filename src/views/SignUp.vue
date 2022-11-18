@@ -66,7 +66,7 @@
         <div class="div2">
           <h1>Sign Up</h1>
           <p>It's free and always will be.</p>
-          <form name="signUp" id="signup" @submit="isFormValid">
+          <form name="signUp" id="signup" @submit.prevent="isFormValid">
             <li>
               <input
                 type="text"
