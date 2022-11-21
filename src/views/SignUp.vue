@@ -1,40 +1,30 @@
 <template>
   <div>
+
     <head>
       <title>Facebook</title>
-    
-      <link
-        rel="icon"
-        type="image/x-icon"
-        href="https://icons.iconarchive.com/icons/yootheme/social-bookmark/512/social-facebook-box-blue-icon.png"
-      />
-      <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-      />
+
+      <link rel="icon" type="image/x-icon"
+        href="https://icons.iconarchive.com/icons/yootheme/social-bookmark/512/social-facebook-box-blue-icon.png" />
+      <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     </head>
 
     <body>
       <header>
         <div class="header">
           <li class="sitename"><a href="http://Facebook.com">Facebook</a></li>
-          <form id="login_form" name="LogIn">
+          <form id="login_form" @submit.prevent="loginForm" name="LogIn" action="post">
             <div id="error"></div>
             <li>
-              Email <br /><input
-                type="text"
-                class="e-mail"
-              /><br /><small></small>
+              Email <br /><input type="text" v-model="login_email" id="e-mail" /><br /><small v-if="login_mailError">{{login_mailError}}</small>
             </li>
             <li>
-              Password<br /><input
-                type="password"
-                name="pass"
-                class="password"
-              /><br /><small></small><br /><a href="">Forgotten account?</a>
+              Password<br /><input type="password" v-model="login_password" name="pass" class="password" /><br /><small v-if="login_passError">{{login_passError}}</small><br /><a
+                href="">Forgotten account?</a>
             </li>
             <li>
-              <input type="submit" name="login" value="Log In" class="b" />
+              <input type="submit" name="login" value="Log In" class="b"/>
             </li>
           </form>
         </div>
@@ -42,10 +32,8 @@
       <div class="wrapper">
         <div class="div1">
           <p>
-            <B
-              >Connect with friends and the <br />world around you on
-              Facebook.</B
-            >
+            <B>Connect with friends and the <br />world around you on
+              Facebook.</B>
           </p>
           <br /><br />
           <p>
@@ -68,47 +56,30 @@
           <p>It's free and always will be.</p>
           <form name="signUp" id="signup" @submit.prevent="isFormValid">
             <li>
-              <input
-                type="text"
-                v-model="username"
-                placeholder="User Name"
-                id="username"
-              /><br /><small v-if="nameError">{{ nameError }}</small>
+              <input type="text" v-model="username" placeholder="User Name" id="username" /><br /><small
+                v-if="nameError">{{ nameError }}</small>
             </li>
             <li>
-              <input
-                type="text"
-                v-model="email"
-                placeholder="email address"
-                id="email"
-              /><br /><small v-if="emailError">{{ emailError }}</small>
+              <input type="text" v-model="email" placeholder="email address" id="email" /><br /><small
+                v-if="emailError">{{ emailError }}</small>
             </li>
             <li>
-              <input
-                type="password"
-                v-model="password"
-                placeholder="New password"
-                id="pass"
-              /><br /><small v-if="passwordError">{{ passwordError }}</small>
+              <input type="password" v-model="password" placeholder="New password" id="pass" /><br /><small
+                v-if="passwordError">{{ passwordError }}</small>
             </li>
             <li>
-              <input
-                type="password"
-                v-model="confirm_password"
-                placeholder="Confirm password"
-                id="confirm_pass"
-              /><br /><small v-if="confirmError">{{ confirmError }}</small>
+              <input type="password" v-model="confirm_password" placeholder="Confirm password"
+                id="confirm_pass" /><br /><small v-if="confirmError">{{ confirmError }}</small>
             </li>
             <li>
-              <input type="radio" name="gender" id="female" />Female
-              <input type="radio" name="gender" id="male" />Male
+              <input type="radio" id="female" />Female
+              <input type="radio" id="male" />Male
               <br /><small></small>
             </li>
             <li class="terms">
               By clicking Sign Up, you agree to our
-              <a href="">Teams. Data Police</a> and <br /><a href=""
-                >Cookies Policy </a
-              >you may receive SMS Notification from us and <br />can opt out
+              <a href="">Teams. Data Police</a> and <br /><a href="">Cookies Policy </a>you may receive SMS Notification
+              from us and <br />can opt out
               any time.
             </li>
             <li><input type="submit" value="Sign Up" class="sub" /></li>
@@ -134,51 +105,100 @@ export default {
       nameError: "",
       emailError: "",
       passwordError: "",
-      confirmError: ""
+      confirmError: "",
+      userDetails:[],
+      login_email:"",
+      login_password:"",
+      login_passError:'',
+      login_mailError:''
     };
   },
   methods: {
     isFormValid() {
+      const user={
+        userName:this.username,
+        Email:this.email,
+        Password:this.password,
+        Confirm_password:this.confirm_password
+
+      }
+
       const emailRegx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/;
       const passwordRegx = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).*$/;
+      
       if (!this.username) {
         this.nameError = "Username is required";
-      } else{
-        this.nameError='';
-        console.log('Username Validation is working')
+      } else {
+        this.nameError = "";
+        console.log("Username Validation is working");
       }
 
       if (!this.email) {
         this.emailError = "E-mail is required";
-      } else if(!emailRegx.test(this.email)){
+      } else if (!emailRegx.test(this.email)) {
         this.emailError = "Enter a valid E-mail";
-      } else{
-        this.emailError='';
-        console.log('Email validation is working')
+      } else {
+        this.emailError = "";
+        console.log("Email validation is working");
       }
 
-      if (!this.password){
+      if (!this.password) {
         this.passwordError = "Password is required";
-      } else if(!passwordRegx.test(this.password)){
-        this.passwordError='Enter a valid password';
-      } else{
-        this.passwordError='';
-        console.log('Password validation is working')
-      }
-      if(!this.confirm_password){
-        this.confirmError = 'Enter the password again'
-      } else if(this.confirm_password != this.password){
-        this.confirmError = 'Password should be same'
+      } else if (!passwordRegx.test(this.password)) {
+        this.passwordError = "Enter a valid password";
       } else {
-        this.confirmError = '';
-        console.log('Confirm password validation is working')
+        this.passwordError = "";
+        console.log("Password validation is working");
       }
-      if(this.username && this.email && this.password && this.confirm_password){
-          console.log("Validations successfully working")
+      if (!this.confirm_password) {
+        this.confirmError = "Enter the password again";
+      } else if (this.confirm_password != this.password) {
+        this.confirmError = "Password should be same";
+      } else {
+        this.confirmError = "";
+        console.log("Confirm password validation is working");
+      }
+      if (
+        this.username &&
+        this.email &&
+        this.password &&
+        this.confirm_password
+      ) {
+        console.log("Validations successfully working");
+        this.userDetails.push(user)
+        localStorage.setItem('user',JSON.stringify(this.userDetails))
+      }
+    },
+    loginForm(){
+      const loginDetails = JSON.parse(localStorage.getItem('user'))
+      if(!this.login_email){
+        this.login_mailError='Email cannot be empty';
+      } else{
+        this.login_mailError = '';
+      }
+      if(!this.login_password){
+        this.login_passError = 'Password cannot be empty';
+      } else{
+        this.login_passError='';
+      }
+      if(this.login_mailError=='' && this.login_passError==''){
+        if(this.login_email == loginDetails[0].Email){
+          console.log('E-mail')
+
+          if(this.login_password == loginDetails[0].Password){
+            this.$router.push('/Dashboard')
+          } else{
+            this.login_passError('Password does not match')
+          }
+        } else{
+          this.login_mailError='User does not exist'
         }
+      
+      }
     }
-  },
-};
+  }
+
+}
 </script>
 
 <style scoped>
@@ -427,5 +447,9 @@ footer {
 
 small {
   color: red;
+}
+input {
+  background-color: white;
+  border: #000000;
 }
 </style>
