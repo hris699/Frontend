@@ -20,7 +20,7 @@
               Email <br /><input type="text" v-model="login_email" id="e-mail" /><br /><small v-if="login_mailError">{{login_mailError}}</small>
             </li>
             <li>
-              Password<br /><input type="password" v-model="login_password" name="pass" class="password" /><br /><small v-if="login_passError">{{login_passError}}</small><br /><a
+              Password<br /><input type="password" v-model="login_password" name="pass" class="password" /><br /><small v-if="login_passError">{{login_passError}}</small><a
                 href="">Forgotten account?</a>
             </li>
             <li>
@@ -72,8 +72,8 @@
                 id="confirm_pass" /><br /><small v-if="confirmError">{{ confirmError }}</small>
             </li>
             <li>
-              <input type="radio" id="female" />Female
-              <input type="radio" id="male" />Male
+              <input type="radio" id="female" name="gender" />Female
+              <input type="radio" id="male" name="gender"/>Male
               <br /><small></small>
             </li>
             <li class="terms">
@@ -95,7 +95,7 @@
 
 <script>
 export default {
-  name: "demo",
+  name: "signup",
   data() {
     return {
       username: "",
@@ -106,26 +106,18 @@ export default {
       emailError: "",
       passwordError: "",
       confirmError: "",
-      userDetails:[],
-      login_email:"",
-      login_password:"",
-      login_passError:'',
-      login_mailError:''
+      userDetails: [],
+      login_email: "",
+      login_password: "",
+      login_passError: "",
+      login_mailError: "",
     };
   },
   methods: {
     isFormValid() {
-      const user={
-        userName:this.username,
-        Email:this.email,
-        Password:this.password,
-        Confirm_password:this.confirm_password
-
-      }
-
       const emailRegx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/;
       const passwordRegx = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).*$/;
-      
+
       if (!this.username) {
         this.nameError = "Username is required";
       } else {
@@ -164,41 +156,44 @@ export default {
         this.password &&
         this.confirm_password
       ) {
+        const user = {
+          userName: this.username,
+          email: this.email,
+          password: this.password,
+        };
         console.log("Validations successfully working");
-        this.userDetails.push(user)
-        localStorage.setItem('user',JSON.stringify(this.userDetails))
+        this.userDetails.push(user);
+        localStorage.setItem("user", JSON.stringify(this.userDetails));
       }
     },
-    loginForm(){
-      const loginDetails = JSON.parse(localStorage.getItem('user'))
-      if(!this.login_email){
-        this.login_mailError='Email cannot be empty';
-      } else{
-        this.login_mailError = '';
+    loginForm() {
+      const loginDetails = JSON.parse(localStorage.getItem("user"));
+      if (!this.login_email) {
+        this.login_mailError = "Email cannot be empty";
+      } else {
+        this.login_mailError = "";
       }
-      if(!this.login_password){
-        this.login_passError = 'Password cannot be empty';
-      } else{
-        this.login_passError='';
+      if (!this.login_password) {
+        this.login_passError = "Password cannot be empty";
+      } else {
+        this.login_passError = "";
       }
-      if(this.login_mailError=='' && this.login_passError==''){
-        if(this.login_email == loginDetails[0].Email){
-          console.log('E-mail')
+      if (this.login_mailError == "" && this.login_passError == "") {
+        if (this.login_email == loginDetails[0].email) {
+          console.log("E-mail");
 
-          if(this.login_password == loginDetails[0].Password){
-            this.$router.push('/Dashboard')
-          } else{
-            this.login_passError('Password does not match')
+          if (this.login_password == loginDetails[0].password) {
+            this.$router.push("/Dashboard");
+          } else {
+            this.login_passError("Password does not match");
           }
-        } else{
-          this.login_mailError='User does not exist'
+        } else {
+          this.login_mailError = "User does not exist";
         }
-      
       }
-    }
-  }
-
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
