@@ -1,26 +1,57 @@
 <template>
     <div>
-        <NewItem v-on:addBook="addData($event)"/>
-        <ModifyItem />
+        <NewItem :editBook='showDialog' v-on:addBook="addData($event)"
+         @show="showDialog=true" :editItem="editedItem" :editIndex="editIndex" v-on:closeDialog="showDialog=false"/>
+        <!-- <ModifyItem /> -->
         <v-data-table
             :headers="headers"
             :items="books"
             :items-per-page="10"
             class="elevation-1"
-        > 
-        </v-data-table>
+        >    
+        <template v-slot:[`item.action`]="{item}">      
+        <v-icon
+          small
+          class="mr-2"
+          @click="editItem(item)"
+          
+        >
+          mdi-pencil
+        </v-icon>
+        <v-icon
+          small
+          @click="deleteItem(item)"
+        >
+          mdi-delete
+        </v-icon>
+      </template>
+    </v-data-table>
+            <v-toolbar> 
+        <v-dialog v-model="dialogDelete" max-width="500px">
+          <v-card>
+            <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
+              <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+              <v-spacer></v-spacer>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        </v-toolbar>
     </div>
 </template>
 <script>
 import NewItem from '../components/NewItem.vue'
-import ModifyItem from '../components/ModifyItem.vue'
 export default {
     name:'BooksTable',
     components:{
         NewItem,
-        ModifyItem
     },
     data: () => ({
+    dialog: false,
+    dialogDelete: false,
+    showDialog :false,
     headers: [
       {
         text: "Book Name",
@@ -106,13 +137,53 @@ export default {
           pages: 265,
           published: '07-06-22',
         },
-      ]
+      ],
+      editIndex:-1,
+      editedItem: {
+      name: "",
+      author: '',
+      genre: '',
+      pages: 0,
+      published: '',
+    },
+      defaultItem :{
+        name:'',
+        author:'',
+        genre:'',
+        pages:0,
+        published:''
+      }
   }),
   methods:{
     addData(event){
-        console.log(this.books.unshift(event))
-    }
-
+      if (this.editIndex > -1) {
+          Object.assign(this.books[this.editIndex], this.editedItem)
+        } else {
+          this.books.unshift(event)       
+           }
+          this.showDialog=false
+    },
+    editItem(item) {
+      this.editIndex = this.books.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.showDialog=true;
+    },
+    deleteItem(item) {
+      this.editIndex = this.books.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialogDelete = true;
+    },
+    deleteItemConfirm() {
+      this.books.splice(this.editIndex, 1);
+      this.closeDelete();
+    },
+    closeDelete() {
+      this.dialogDelete = false;
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editIndex = -1;
+      });
+    },
   }
 }
 </script>

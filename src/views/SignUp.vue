@@ -161,9 +161,15 @@ export default {
           email: this.email,
           password: this.password,
         };
-        console.log("Validations successfully working");
+        alert("Validations successfully working");
         this.userDetails.push(user);
         localStorage.setItem("user", JSON.stringify(this.userDetails));
+
+        this.username='',
+        this.email = '',
+        this.password ='',
+        this.confirm_password =''
+
       }
     },
     loginForm() {

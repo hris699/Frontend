@@ -11,7 +11,8 @@ import BooksTable from '../components/BooksTable.vue';
 export default {
 
   name:'Dashboard',
-  components:{BooksTable,
+  components:{
+    BooksTable
     
   }
 
