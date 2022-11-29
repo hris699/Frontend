@@ -105,17 +105,9 @@
             this.dialog= true
         }else{
           this.close()
-        }
-        
-        console.log(this.dialog)
-        
-      }
-      
-      
+        }      
+      }      
     },
-    // created(){
-    //   console.log(this.editBook)
-    // },
     methods:{
 
       close() {
@@ -123,12 +115,12 @@
         this.$nextTick(() => {
         this.editItem = Object.assign({}, this.defaultItem);
         this.addIndex = -1;
-        this.$emit("closeDialog",this.dialog)
       });
     },
       save(){
         this.$emit("addBook",this.editItem)
         this.$emit('show',this.editBook)
+        this.$emit("closeDialog",this.dialog)
         this.dialog=false;
       },
     }

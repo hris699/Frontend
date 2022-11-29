@@ -2,14 +2,13 @@
     <div>
         <NewItem :editBook='showDialog' v-on:addBook="addData($event)"
          @show="showDialog=true" :editItem="editedItem" :editIndex="editIndex" v-on:closeDialog="showDialog=false"/>
-        <!-- <ModifyItem /> -->
         <v-data-table
             :headers="headers"
             :items="books"
             :items-per-page="10"
             class="elevation-1"
         >    
-        <template v-slot:[`item.action`]="{item}">      
+        <template v-slot:[`item.action`]="{item}">
         <v-icon
           small
           class="mr-2"
