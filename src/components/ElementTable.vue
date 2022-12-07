@@ -40,9 +40,7 @@ export default {
     methods:{
         async getResponse(){
             try{
-            console.log('this working');
             const response = await axios.get("http://jsonplaceholder.typicode.com/users")
-            console.log('user resolved')
             this.users = response.data
             console.log(this.users)
             }

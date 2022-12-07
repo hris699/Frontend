@@ -10,6 +10,7 @@
         >    
         <template v-slot:[`item.action`]="{item}">
         <v-icon
+          color='primary'
           small
           class="mr-2"
           @click="editItem(item)"
@@ -18,6 +19,7 @@
           mdi-pencil
         </v-icon>
         <v-icon
+          color='deep-orange'
           small
           @click="deleteItem(item)"
         >
@@ -27,12 +29,12 @@
     </v-data-table>
             <v-toolbar> 
         <v-dialog v-model="dialogDelete" max-width="500px">
-          <v-card>
+          <v-card tile>
             <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+              <v-btn color="deep-purple" text @click="closeDelete">Cancel</v-btn>
+              <v-btn color="deep-purple" text @click="deleteItemConfirm">OK</v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>
@@ -61,7 +63,7 @@ export default {
       { text: "Author", value: "author" },
       { text: "Genre ", value: "genre" },
       { text: "Pages ", value: "pages" },
-      { text: "Published", value: "published" },
+      { text: "Published On", value: "published" },
       { text: "Actions",value:'action',sortable:false}
       
     ],
