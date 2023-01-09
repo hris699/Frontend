@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import Signup from "../views/Signup.vue"
-// import ElementTable from "../components/ElementTable.vue"
 
 Vue.use(VueRouter)
 
