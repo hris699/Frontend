@@ -17,6 +17,7 @@ artifacts:
     - main.js
     - node_modules/**/*
     - package.json
+    - package-lock.json
     - appspec.yml
     - scripts/**/*
     - src/**/*
