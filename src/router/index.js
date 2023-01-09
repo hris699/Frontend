@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import Signup from "../views/Signup.vue"
+// import ElementTable from "../components/ElementTable.vue"
 
 Vue.use(VueRouter)
 
@@ -18,6 +19,12 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: Signup
+  },
+  {
+    path: '/elementTable',
+    name: 'elementTable',
+
+    component: () => import(/* webpackChunkName: "about" */ '../components/ElementTable.vue')
   },
   {
     path:'/dashboard',

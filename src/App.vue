@@ -3,7 +3,8 @@
     <v-app-bar app>  
     <router-link to="/">Home</router-link> |
     <router-link to="/SignUp">Sign Up</router-link> |
-    <router-link to="/Dashboard"></router-link>
+    <router-link to="/ElementTable">ElementTable</router-link> |
+    <router-link to="/Dashboard">Dashboard</router-link>
     </v-app-bar>
     <v-main>
       <router-view/>

@@ -102,7 +102,9 @@
   export default {
     data: () =>({
       dialog:false,
-      listItem:''
+      listItem:{},
+      listIndex:-1
+
     }),
     props:{
       editBook:Boolean,
@@ -113,6 +115,7 @@
       formTitle() {
         return this.editIndex === -1 ? "New Book" : "Edit Book";
       },
+      
   },
     watch: {
       editBook(){
@@ -122,22 +125,22 @@
           this.close()
         }
         this.listItem = this.editItem;
-      },
-       
+        this.listIndex = this.editIndex
+      },  
     },
     methods:{
-
+      
       close() {
         this.dialog = false;
         this.$nextTick(() => {
-        this.listItem = Object.assign({}, this.defaultItem);
-        this.addIndex = -1;
+          this.listItem = Object.assign({}, this.defaultItem);
+          this.listIndex = -1;
+          this.$emit("closeDialog",this.dialog)
       });
     },
       save(){
         this.$emit("addBook",this.listItem)
         this.$emit('show',this.editBook)
-        this.$emit("closeDialog",this.dialog)
         this.dialog=false;
       },
     }

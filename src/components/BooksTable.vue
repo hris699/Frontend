@@ -1,7 +1,7 @@
 <template>
     <div>
-        <NewItem :editBook='showDialog' v-on:addBook="addData($event)"
-         @show="showDialog=true" :editItem="editedItem" :editIndex="editIndex" v-on:closeDialog="showDialog=false"/>
+        <NewItem :editBook='showDialog' :editItem="editedItem" :editIndex="editIndex"
+         v-on:addBook="addData($event)"  @show="showDialog=false"  v-on:closeDialog="showDialog=false"/>
         <v-data-table
             :headers="headers"
             :items="books"
@@ -14,7 +14,6 @@
           small
           class="mr-2"
           @click="editItem(item)"
-          
         >
           mdi-pencil
         </v-icon>
@@ -64,8 +63,7 @@ export default {
       { text: "Genre ", value: "genre" },
       { text: "Pages ", value: "pages" },
       { text: "Published On", value: "published" },
-      { text: "Actions",value:'action',sortable:false}
-      
+      { text: "Actions",value:'action',sortable:false}     
     ],
     books: [
         {
@@ -162,7 +160,7 @@ export default {
         } else {
           this.books.unshift(event)       
            }
-          this.showDialog=false
+      this.editIndex =-1
     },
     editItem(item) {
       this.editIndex = this.books.indexOf(item);

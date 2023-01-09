@@ -20,8 +20,8 @@
               Email <br /><input type="text" v-model="login_email" id="e-mail" /><br /><small v-if="login_mailError">{{login_mailError}}</small>
             </li>
             <li>
-              Password<br /><input type="password" v-model="login_password" name="pass" class="password" /><br /><small v-if="login_passError">{{login_passError}}</small><a
-                href="">Forgotten account?</a>
+              Password<br /><input type="password" v-model="login_password" name="pass" class="password" /><br /><small v-if="login_passError">{{login_passError}}</small>
+              <a href="">Forgotten account?</a>
             </li>
             <li>
               <input type="submit" name="login" value="Log In" class="b"/>
@@ -121,8 +121,7 @@ export default {
       if (!this.username) {
         this.nameError = "Username is required";
       } else {
-        this.nameError = "";
-        console.log("Username Validation is working");
+        this.nameError = "";  
       }
 
       if (!this.email) {
@@ -130,17 +129,15 @@ export default {
       } else if (!emailRegx.test(this.email)) {
         this.emailError = "Enter a valid E-mail";
       } else {
-        this.emailError = "";
-        console.log("Email validation is working");
+        this.emailError = "";  
       }
-
       if (!this.password) {
         this.passwordError = "Password is required";
       } else if (!passwordRegx.test(this.password)) {
         this.passwordError = "Enter a valid password";
       } else {
         this.passwordError = "";
-        console.log("Password validation is working");
+        
       }
       if (!this.confirm_password) {
         this.confirmError = "Enter the password again";
@@ -148,7 +145,7 @@ export default {
         this.confirmError = "Password should be same";
       } else {
         this.confirmError = "";
-        console.log("Confirm password validation is working");
+        
       }
       if (
         this.username &&
@@ -185,16 +182,16 @@ export default {
         this.login_passError = "";
       }
       if (this.login_mailError == "" && this.login_passError == "") {
-        if (this.login_email == loginDetails[0].email) {
-          console.log("E-mail");
-
-          if (this.login_password == loginDetails[0].password) {
+        for (let i in loginDetails){
+        if (this.login_email == loginDetails[i].email) {
+          if (this.login_password == loginDetails[i].password) {
             this.$router.push("/Dashboard");
           } else {
             this.login_passError("Password does not match");
           }
         } else {
           this.login_mailError = "User does not exist";
+        }
         }
       }
     },

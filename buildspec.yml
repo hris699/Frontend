@@ -1,0 +1,26 @@
+version: 0.2
+phases:
+  install:
+    runtime-version:
+      nodejs: 16
+
+    commands:
+      - npm install
+
+  build:
+    commands:
+      - echo Build started on `date`
+      - npm run-script build
+
+artifacts:
+  files:
+    - main.js
+    - node_modules/**/*
+    - package.json
+    - appspec.yml
+    - scripts/**/*
+    - src/**/*
+    - vue.config.js
+    - public/**/*
+    - babel.config.js
+    - jsconfig.json
